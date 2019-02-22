@@ -7,6 +7,12 @@ RBAC_USER_MANAGEMENT_KOPS
     
     aws s3 cp s3://$BUCKET/$CLUSTER/pki/issued/ca/$CERT ca.crt
     
+    In case you are not using KOPS, 
+        
+        kubeadm clusters - certificates are found inside /etc/kubernetes/pki on master
+        
+        manually deployed clusters - These are the kubernetes apiserver certificates that might be deployed at custom location
+    
     mkdir usercluster
     
     cp ca.key ca.crt usercluster/
