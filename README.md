@@ -79,7 +79,7 @@ RBAC_USER_MANAGEMENT_KOPS
     
     kubectl config use-context userspace
 
-##  Verify scope 
+##  Smoke Test access policy for user 
 
     user@ip-172-31-33-248:~$ kubectl run nginx --image=nginx
     kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead.
@@ -95,6 +95,23 @@ RBAC_USER_MANAGEMENT_KOPS
     
     user@ip-172-31-33-248:~$ kubectl get pods --all-namespaces
     Error from server (Forbidden): pods is forbidden: User "user" cannot list pods at the cluster scope
+    
+##  Distribute .kube across multiple users 
+
+    adduser employee 
+    
+    sudo -iu employee 
+    
+    cp ~user/.kube . 
+    
+    employee@ip-172-31-33-248:~$ kubectl get pods
+    NAME                     READY   STATUS    RESTARTS   AGE
+    nginx-65899c769f-jhv89   1/1     Running   0          5m
+    
+    employee@ip-172-31-33-248:~$ kubectl get pods --all-namespaces
+    Error from server (Forbidden): pods is forbidden: User "user" cannot list pods at the cluster scope
+
+
 
 
 
